@@ -44,8 +44,29 @@ const tubeline = new THREE.LineSegments(edges, linemat)
 scene.add(tubeline)
 
 
-const numBoxes = 45;
+const numBoxes = 100;
+const size = 0.075;
+const boxGeo = new THREE.BoxGeometry(size, size, size)
 
+for (let i = 0; i < numBoxes; i += 1) {
+    const boxmat = new THREE.MeshBasicMaterial({ color: 0xffffff })
+    const box = new THREE.Mesh(boxGeo, boxmat);
+
+    const p = (i / numBoxes + Math.random() * 0.1) % 1;
+    const pos = tubeGeo.parameters.path.getPointAt(p);
+    pos.x += Math.random() - 0.4;
+    pos.z += Math.random() - 0.4;
+    box.position.copy(pos);
+
+    const rote = new THREE.Vector3(
+        Math.random() * Math.PI,
+        Math.random() * Math.PI,
+        Math.random() * Math.PI
+    );
+    box.rotation.set(rote.x,rote.y,rote.z);
+    scene.add(box)
+
+}
 
 // update camer 
 function updateCamera(i) {
